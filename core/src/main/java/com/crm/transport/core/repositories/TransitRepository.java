@@ -6,12 +6,11 @@ import com.crm.transport.core.enums.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface TransitRepository extends JpaRepository<Transport, Integer> {
-    Transport findById(int id);
-    Optional<Transport> findByWarehouseId(int warehouseId);
-    Optional<Transport> findAllByType(Type type);
-    Optional<Transport> findAllByStatus(Status status);
+    List<Transport> findByWarehouseId(int warehouseId);
+    List<Transport> findAllByType(Type type);
+    List<Transport> findAllByStatus(Status status);
 }
