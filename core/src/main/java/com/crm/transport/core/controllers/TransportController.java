@@ -8,12 +8,12 @@ import com.crm.transport.core.services.TransportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +24,7 @@ import java.util.List;
 )
 @RestController
 @RequestMapping("/transports")
+@Validated
 public class TransportController {
 
     private final TransportService transportService;
@@ -84,7 +85,7 @@ public class TransportController {
     @PostMapping("/")
     @Operation(summary = "Добавление транспорта", description = "Позволяет создать транспорт")
     public ResponseEntity<TransportResponse> createTransport(
-            @RequestBody TransportRequest transportRequest
+            @Valid @RequestBody TransportRequest transportRequest
     ) {
         TransportResponse response = transportService.createTransport(transportRequest);
         if (response == null) return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -95,7 +96,7 @@ public class TransportController {
     @Operation(summary = "Изменение транспорта", description = "Позволяет изменить информацию о транспорте")
     public ResponseEntity<TransportResponse> updateTransport(
             @PathVariable @Min(0) @Parameter(description = "Идентификатор транспорта", required = true) Integer transportId,
-            @RequestBody TransportRequest transportRequest
+            @Valid @RequestBody TransportRequest transportRequest
     ) {
         TransportResponse response = transportService.updateTransport(transportId, transportRequest);
         if(response == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
