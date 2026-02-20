@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TransitRepository extends JpaRepository<Transport, Integer> {
-    List<Transport> findByWarehouseId(int warehouseId);
+public interface TransportRepository extends JpaRepository<Transport, Integer> {
+    List<Transport> findByWarehouseId(Integer warehouseId);
     List<Transport> findAllByType(Type type);
     List<Transport> findAllByStatus(Status status);
 }
