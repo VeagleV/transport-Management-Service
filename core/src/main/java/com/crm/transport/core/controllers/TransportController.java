@@ -43,7 +43,7 @@ public class TransportController {
     }
 
     @GetMapping("/{transportId}")
-    @Operation(summary = "Получение транспорта", description = "Позволяет получить транспорт по id")
+    @Operation(summary = "Получение транспорта", description = "Позволяет получить транспорт по идентификатору")
     public ResponseEntity<TransportResponse> getTransportById(
             @PathVariable @Min(0) @Parameter(description = "Идентификатор транспорта", required = true) Integer transportId
     ) {
@@ -100,7 +100,7 @@ public class TransportController {
     ) {
         TransportResponse response = transportService.updateTransport(transportId, transportRequest);
         if(response == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{transportId}")
