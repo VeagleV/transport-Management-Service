@@ -4,6 +4,7 @@ import com.crm.transport.core.enums.Status;
 import com.crm.transport.core.enums.Type;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
@@ -23,10 +24,12 @@ public class TransportRequest {
     private Integer warehouseId;
 
     @Schema(description = "Статус", allowableValues = {"AVAILABLE", "IN_TRANSIT", "MAINTENANCE", "OUT_OF_SERVICE"})
+    @NotNull
     @JsonProperty("status")
     private Status status;
 
     @Schema(description = "Тип", allowableValues = {"AVIA", "ROAD", "TRAIN"})
+    @NotNull
     @JsonProperty("type")
     private Type type;
 
