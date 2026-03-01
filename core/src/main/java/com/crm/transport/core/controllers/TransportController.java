@@ -64,14 +64,14 @@ public class TransportController {
         return new ResponseEntity<>(transports, HttpStatus.OK);
     }
 
-    @GetMapping("/transportsByWarehouses")
-    @Operation(summary = "Получение транспортов по статусу", description = "Позволяет получить транспорты по значеню status")
+    @PostMapping("/transportsByWarehouses")
+    @Operation(summary = "Получение списка транспортов у списка складов", description = "Позволяет получить список транспортов у переданных складов")
     public ResponseEntity<List<TransportResponse>> getTransportByWarehouses(
-                @Valid @RequestBody List<WarehouseIdRequest> warehousesId
+                @Valid @RequestBody List<Integer> warehousesId
             ){
         List<TransportResponse> response = new ArrayList<>();
-        for(WarehouseIdRequest warehouseIdRequest : warehousesId){
-            List<TransportResponse> transports = transportService.getAllTransportsByWarehouseId(warehouseIdRequest.getWarehouseId());
+        for(Integer warehouse : warehousesId){
+            List<TransportResponse> transports = transportService.getAllTransportsByWarehouseId(warehouse);
             response.addAll(transports);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
