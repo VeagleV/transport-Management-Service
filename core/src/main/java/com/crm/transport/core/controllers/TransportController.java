@@ -2,6 +2,7 @@ package com.crm.transport.core.controllers;
 
 import com.crm.transport.core.dto.TransportRequest;
 import com.crm.transport.core.dto.TransportResponse;
+import com.crm.transport.core.dto.WarehouseIdRequest;
 import com.crm.transport.core.enums.Status;
 import com.crm.transport.core.enums.Type;
 import com.crm.transport.core.services.TransportService;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Tag(
@@ -60,6 +62,19 @@ public class TransportController {
         List<TransportResponse> transports = transportService.getAllTransportsByStatus(status);
         if (transports.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(transports, HttpStatus.OK);
+    }
+
+    @PostMapping("/transportsByWarehouses")
+    @Operation(summary = "Получение списка транспортов у списка складов", description = "Позволяет получить список транспортов у переданных складов")
+    public ResponseEntity<List<TransportResponse>> getTransportByWarehouses(
+                @Valid @RequestBody List<Integer> warehousesId
+            ){
+        List<TransportResponse> response = new ArrayList<>();
+        for(Integer warehouse : warehousesId){
+            List<TransportResponse> transports = transportService.getAllTransportsByWarehouseId(warehouse);
+            response.addAll(transports);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/type/{type}")
