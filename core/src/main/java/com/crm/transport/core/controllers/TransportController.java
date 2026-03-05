@@ -118,6 +118,15 @@ public class TransportController {
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
 
+
+    @PutMapping("/send")
+    public ResponseEntity<?> sendTransport(
+            @RequestBody List<Integer> transportIdList
+    ){
+        transportService.sendTransport(transportIdList);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/{transportId}")
     @Operation(summary = "Удаление транспорта", description = "Позволяет удалить информацию о транспорте")
     public ResponseEntity<TransportResponse> deleteTransport(
