@@ -123,7 +123,20 @@ public class TransportController {
     public ResponseEntity<?> sendTransport(
             @RequestBody List<Integer> transportIdList
     ){
-        transportService.sendTransport(transportIdList);
+        for (Integer transportId : transportIdList) {
+            transportService.changeTransportStatus(transportId, Status.IN_TRANSIT);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/RTB")
+    public ResponseEntity<?> RTBTransport(
+            @RequestBody List<Integer> transportIdList
+    ){
+        for (Integer transportId : transportIdList) {
+            transportService.changeTransportStatus(transportId, Status.RETURNING_TO_BASE);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -59,13 +59,11 @@ public class TransportService {
         return TransportMappers.createTransportResponse(updatedTransport);
     }
 
-    public void sendTransport(List<Integer> transportIdList){
-        for (Integer transportId : transportIdList) {
-            Transport transport = transportRepository.findById(transportId).orElse(null);
-            if (transport == null) continue;
-            transport.setStatus(Status.IN_TRANSIT);
-            transportRepository.save(transport);
-        }
+    public void changeTransportStatus(Integer transportId, Status status) {
+        Transport transport = transportRepository.findById(transportId).orElse(null);
+        if (transport == null) return;
+        transport.setStatus(status);
+        transportRepository.save(transport);
     }
 
     public List<TransportResponse> getAllTransportsByWarehouseId(Integer warehouseId) {
